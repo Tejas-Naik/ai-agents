@@ -1,19 +1,30 @@
-import AgentPulse from "@/components/AgentPulse";
 import {
   Brain,
   Camera,
   Mic,
   MessageSquare,
   Video,
-  Sparkles,
   Zap,
   BarChart3,
   Target,
+  LucideIcon,
 } from "lucide-react";
 import YoutubeVideoForm from "@/components/YoutubeVideoForm";
-import { Button } from "@/components/ui/button";
 
-const steps = [
+interface Step {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}
+
+interface Feature {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  emoji: string;
+}
+
+const steps: Step[] = [
   {
     title: "1. Connect Your Content",
     description: "Share your youtube video URL and let your agent get to work",
@@ -33,7 +44,7 @@ const steps = [
   },
 ];
 
-const features = [
+const features: Feature[] = [
   {
     title: "Smart Analysis",
     description:
@@ -89,10 +100,10 @@ export default function Home() {
               <span className="text-black">Meet Your Personal</span>{" "}
               <span className="text-white">AI Content Agent</span>
             </h1>
-            
+
             <p className="text-lg text-white/90 mb-12 max-w-2xl">
-              Transform your video content with AI-powered analysis, transcription, and
-              insights. Get started in seconds.
+              Transform your video content with AI-powered analysis,
+              transcription, and insights. Get started in seconds.
             </p>
 
             {/* Video Form */}
@@ -122,7 +133,7 @@ export default function Home() {
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="text-2xl">{feature.emoji}</div>
-                    {/* <Icon className="w-5 h-5 text-white/90" /> */}
+                    <Icon className="w-5 h-5 text-white/90" />
                   </div>
 
                   <h3 className="text-xl font-semibold mb-3 text-white">
@@ -179,11 +190,11 @@ export default function Home() {
           </p>
           <blockquote className="mt-12 max-w-2xl mx-auto border-l-2 border-white/40 pl-6 italic">
             <p className="text-lg text-white/90">
-              "AgentTube's AI analysis has transformed how we create content.
-              It's like having a content strategist working 24/7."
+              &ldquo;AgentTube&apos;s AI analysis has transformed how we create content.
+              It&apos;s like having a content strategist working 24/7.&rdquo;
             </p>
             <footer className="mt-2 text-sm text-white/70">
-              — Alex Chen, YouTube Creator with 1M+ Subscribers
+              &mdash; Alex Chen, YouTube Creator with 1M+ Subscribers
             </footer>
           </blockquote>
         </div>
