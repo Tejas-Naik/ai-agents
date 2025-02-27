@@ -1,7 +1,6 @@
 import AgentPulse from "@/components/AgentPulse";
 import {
   Brain,
-  Image as ImageIcon,
   Camera,
   Mic,
   MessageSquare,
