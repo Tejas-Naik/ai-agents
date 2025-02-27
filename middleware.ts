@@ -1,10 +1,10 @@
-import { authMiddleware } from "@clerk/nextjs/server";
+import { authMiddleware } from "@clerk/nextjs";
 
 // /video/{id}/analysis
 // This example protects all routes including api/trpc routes
 // Please edit this to allow other routes to be public as needed.
 export default authMiddleware({
-  publicRoutes: ["/api/webhook", "/", "/sign-in"],
+  publicRoutes: ["/", "/sign-in", "/api/webhook"],
   debug: true,
 });
 
