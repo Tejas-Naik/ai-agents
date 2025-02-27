@@ -6,31 +6,34 @@ import { Button } from "./ui/button";
 
 function Header() {
   return (
-    <header className="sticky top-0 left-0 right-0 px-4 md:px-0 bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50">
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between h-16">
+    <div className="fixed top-4 left-1/2 -translate-x-1/2 w-[80%] z-50">
+      <div className="bg-gradient-to-b from-white/70 to-white/20 backdrop-blur-md border border-white/30 rounded-full shadow-lg">
+        <div className="flex items-center justify-between h-16 px-6">
           {/* Left */}
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-4">
-              <AgentPulse size="small" color="blue" />
-              <h1 className="text-xl font-semibold bg-gradient-to-r from-blue-600 to-purple-400 bg-clip-text text-transparent">
+              <div className="p-2 rounded-full bg-gradient-to-b from-white/30 to-white/10 backdrop-blur-sm border border-white/20">
+                <AgentPulse size="small" color="blue" />
+              </div>
+              <h1 className="text-xl font-semibold text-white">
                 AgentTube
               </h1>
             </Link>
           </div>
+
           {/* Right */}
           <div className="flex items-center gap-4">
             <SignedIn>
               <Link href="/manage-plan">
                 <Button
-                  variant="outline"
-                  className="mr-4 bg-gradient-to-r from-blue-600 to-blue-400 text-transparent bg-clip-text"
+                  variant="ghost"
+                  className="text-white hover:bg-white/20 transition-colors"
                 >
                   Manage Plan
                 </Button>
               </Link>
 
-              <div className="p-2 w-10 flex items-center justify-center rounded-full border bg-blue-100 border-blue-200">
+              <div className="p-2 w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-b from-white/30 to-white/10 backdrop-blur-sm border border-white/20">
                 <UserButton />
               </div>
             </SignedIn>
@@ -39,7 +42,7 @@ function Header() {
               <SignInButton mode="modal">
                 <Button
                   variant="ghost"
-                  className="bg-gradient-to-r from-blue-600 to-blue-400 text-transparent bg-clip-text"
+                  className="text-white hover:bg-white/20 transition-colors"
                 >
                   Sign In
                 </Button>
@@ -48,7 +51,7 @@ function Header() {
           </div>
         </div>
       </div>
-    </header>
+    </div>
   );
 }
 
