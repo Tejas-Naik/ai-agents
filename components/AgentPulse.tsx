@@ -18,7 +18,7 @@ function AgentPulse({ size = "medium", color = "blue" }: AgentPulseProps) {
 
   return (
     <div
-      className={`${sizeClasses[size]} ${colorClasses[color]}rounded-full animate-ping`}
+      className={`${sizeClasses[size]} ${colorClasses[color]} rounded-full animate-ping`}
     ></div>
   );
 }
