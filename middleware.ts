@@ -1,19 +1,21 @@
 import { NextResponse } from "next/server";
-import { withClerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware } from "@clerk/nextjs";
 
 // /video/{id}/analysis
 // This example protects all routes including api/trpc routes
 // Please edit this to allow other routes to be public as needed.
-export default withClerkMiddleware(() => {
-  return NextResponse.next();
-});
+export default clerkMiddleware();
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!.*\\..*|_next).*)",
-    // Optional: Allow images to be accessed publicly
-    "/",
-    "/(api|trpc)(.*)",
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next
+     * - static (static files)
+     * - favicon.ico (favicon file)
+     * - public (public files)
+     * - api (API routes)
+     */
+    "/((?!static|.*\\..*|_next|favicon.ico|api).*)",
   ],
 };
