@@ -1,4 +1,6 @@
 import AgentPulse from "@/components/AgentPulse";
+import YoutubeVideoForm from "@/components/YoutubeVideoForm";
+import { Button } from "@/components/ui/button";
 import {
   Brain,
   Camera,
@@ -10,7 +12,6 @@ import {
   BarChart3,
   Target,
 } from "lucide-react";
-import YoutubeVideoForm from "@/components/YoutubeVideoForm";
 
 const steps = [
   {
@@ -79,51 +80,49 @@ const features = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-600 to-purple-600">
+    <div className="min-h-screen bg-blue-600">
       {/* Hero Section */}
-      <section className="pt-32 pb-20">
+      <section className="pt-36 pb-20">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center gap-10 text-center mb-12">
-            <div className="p-3 rounded-full bg-white/10 backdrop-blur-sm">
-              <AgentPulse size="large" color="blue" />
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Meet Your Personal{" "}
-              <span className="bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-                AI Content Agent
-              </span>
+          <div className="flex flex-col items-center text-center">
+            <h1 className="text-6xl font-bold mb-6 max-w-4xl">
+              <span className="text-black">Meet Your Personal</span>{" "}
+              <span className="text-white">AI Content Agent</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed">
+
+            <p className="text-lg text-white/90 mb-12 max-w-2xl">
               Transform your video content with AI-powered analysis,
               transcription, and insights. Get started in seconds.
             </p>
 
-            {/* YoutubeVideoForm */}
-            <div className="w-full max-w-2xl bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20">
-              <YoutubeVideoForm />
+            {/* Video Form */}
+            <div className="w-full max-w-2xl">
+              <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20">
+                <YoutubeVideoForm />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features section */}
+      {/* Features Section */}
       <section className="py-20">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="text-3xl font-bold mb-12 text-center text-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-white text-center mb-12">
             Powerful Features for Content Creators
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
                 <div
                   key={index}
-                  className="bg-white/15 backdrop-blur-md p-8 rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300"
+                  className="bg-white/10 backdrop-blur-md p-8 rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="text-2xl">{feature.emoji}</div>
-                    {/* <Icon className="w-5 h-5 text-white/90" /> */}
+                    <Icon className="w-5 h-5 text-white/90" />
                   </div>
 
                   <h3 className="text-xl font-semibold mb-3 text-white">
