@@ -1,6 +1,4 @@
 import AgentPulse from "@/components/AgentPulse";
-import YoutubeVideoForm from "@/components/YoutubeVideoForm";
-import { Button } from "@/components/ui/button";
 import {
   Brain,
   Camera,
@@ -12,6 +10,8 @@ import {
   BarChart3,
   Target,
 } from "lucide-react";
+import YoutubeVideoForm from "@/components/YoutubeVideoForm";
+import { Button } from "@/components/ui/button";
 
 const steps = [
   {
@@ -89,15 +89,15 @@ export default function Home() {
               <span className="text-black">Meet Your Personal</span>{" "}
               <span className="text-white">AI Content Agent</span>
             </h1>
-
+            
             <p className="text-lg text-white/90 mb-12 max-w-2xl">
-              Transform your video content with AI-powered analysis,
-              transcription, and insights. Get started in seconds.
+              Transform your video content with AI-powered analysis, transcription, and
+              insights. Get started in seconds.
             </p>
 
             {/* Video Form */}
             <div className="w-full max-w-2xl">
-              <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20">
+              <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
                 <YoutubeVideoForm />
               </div>
             </div>
@@ -105,24 +105,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features section */}
       <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-white text-center mb-12">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <h2 className="text-3xl font-bold mb-12 text-center text-white">
             Powerful Features for Content Creators
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
                 <div
                   key={index}
-                  className="bg-white/10 backdrop-blur-md p-8 rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300"
+                  className="bg-white/15 backdrop-blur-md p-8 rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="text-2xl">{feature.emoji}</div>
-                    <Icon className="w-5 h-5 text-white/90" />
+                    {/* <Icon className="w-5 h-5 text-white/90" /> */}
                   </div>
 
                   <h3 className="text-xl font-semibold mb-3 text-white">

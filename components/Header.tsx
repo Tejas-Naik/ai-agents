@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import AgentPulse from "./AgentPulse";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 
 function Header() {
@@ -24,14 +24,14 @@ function Header() {
           {/* Right */}
           <div className="flex items-center">
             <SignedOut>
-              <Link href="/sign-in">
+              <SignInButton mode="modal">
                 <Button
                   variant="ghost"
                   className="text-white text-sm font-medium hover:bg-white/10 transition-colors rounded-full px-6"
                 >
                   Sign In
                 </Button>
-              </Link>
+              </SignInButton>
             </SignedOut>
 
             <SignedIn>
