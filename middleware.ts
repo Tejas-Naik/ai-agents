@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { clerkMiddleware } from "@clerk/nextjs";
+import { authMiddleware } from "@clerk/nextjs";
 
 // /video/{id}/analysis
 // This example protects all routes including api/trpc routes
 // Please edit this to allow other routes to be public as needed.
-export default clerkMiddleware();
+export default authMiddleware();
 
 export const config = {
   matcher: [
