@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
 import AgentPulse from "./AgentPulse";
-import { SignedIn, SignedOut, SignInButton, UserButton, type Appearance } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 
-const signInAppearance: Appearance = {
+const signInAppearance = {
   elements: {
     rootBox: "w-full",
     card: "bg-white/20 backdrop-blur-md border border-white/30 rounded-xl shadow-lg",
@@ -19,7 +19,7 @@ const signInAppearance: Appearance = {
   },
 };
 
-const userButtonAppearance: Appearance = {
+const userButtonAppearance = {
   elements: {
     avatarBox: "w-8 h-8",
     userButtonPopoverCard: "bg-white/20 backdrop-blur-md border border-white/30 rounded-xl shadow-lg",
