@@ -10,14 +10,14 @@ interface TranscriptEntry {
 }
 
 function Transcription({ videoId }: { videoId: string }) {
-  const [transcript, setTranscript] = useState<{
+  const [transcript] = useState<{
     transcript: TranscriptEntry[];
     cache: string;
   } | null>(null);
-
   const { featureUsageExceeded } = useSchematicEntitlement(
     FeatureFlag.TRANSCRIPTION
   );
+  console.log(videoId);
   return (
     <div className="flex flex-col gap-2 max-h-[250px] overflow-y-auto rounded-md p-4">
       {transcript ? (
