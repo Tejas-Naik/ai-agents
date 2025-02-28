@@ -17,7 +17,7 @@ function Transcription({ videoId }: { videoId: string }) {
   const { featureUsageExceeded } = useSchematicEntitlement(
     FeatureFlag.TRANSCRIPTION
   );
-  console.log(videoId);
+  console.log(videoId, featureUsageExceeded);
   return (
     <div className="flex flex-col gap-2 max-h-[250px] overflow-y-auto rounded-md p-4">
       {transcript ? (
