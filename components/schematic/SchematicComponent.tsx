@@ -2,13 +2,9 @@ import { getTemperoryAccessToken } from "@/actions/getTemperoryAccessToken";
 import SchematicEmbed from "./SchematicEmbed";
 
 async function SchematicComponent({ 
-  componentId,
-  options 
+  componentId 
 }: { 
   componentId: string;
-  options?: {
-    currency?: string;
-  };
 }) {
   if (!componentId) {
     return null;
@@ -25,7 +21,6 @@ async function SchematicComponent({
     <SchematicEmbed 
       accessToken={accessToken} 
       componentId={componentId}
-      options={options}
     />
   );
 }

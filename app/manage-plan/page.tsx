@@ -8,12 +8,7 @@ function ManagePlan() {
         Manage your subscription and billing details here.
       </p>
 
-      <SchematicComponent
-        componentId="cmpn_Z5tANUnQRau"
-        options={{
-          currency: "USD", // Add default currency
-        }}
-      />
+      <SchematicComponent componentId="cmpn_Z5tANUnQRau" />
     </div>
   );
 }
