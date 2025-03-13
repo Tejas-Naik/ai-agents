@@ -1,5 +1,6 @@
 "use client";
 
+import AiAgentChat from "@/components/AiAgentChat";
 import ThumbnailGeneration from "@/components/ThumbnailGeneration";
 import TitleGeneration from "@/components/TitleGeneration";
 import Transcription from "@/components/Transcription";
@@ -39,7 +40,7 @@ function AnalysisPage() {
         {/* Right Side */}
         <div className="order-1 lg:order-2 lg:sticky lg:top-20 h-[500px] md:h-[calc(100vh-6rem)]">
           {/* AI Agent Chat Box */}
-          <p>AI Chat box</p>
+          <AiAgentChat videoId={videoId} />
         </div>
       </div>
     </div>
