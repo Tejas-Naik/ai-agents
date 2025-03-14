@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         hostname: "yt3.ggpht.com",
         protocol: "https",
       },
+      {
+        hostname: "frugal-ibis-710.convex.cloud",
+        protocol: "https",
+      },
     ],
   },
 };

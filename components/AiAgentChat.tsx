@@ -1,11 +1,14 @@
-// "use client";
+"use client";
 
 import React from "react";
-import { useChat } from "@ai-sdk/react";
+import { Message, useChat } from "@ai-sdk/react";
 import { Button } from "./ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import { useSchematicFlag } from "@schematichq/schematic-react";
+import { FeatureFlag } from "@/features/flags";
+import { ImageIcon, LetterText, PenIcon } from "lucide-react";
 
 const formatToolInvocation = (part: ToolPart) => {
   if (!part.toolInvocation) return "Unknown tool";
@@ -24,12 +27,61 @@ interface ToolPart {
 }
 
 function AiAgentChat({ videoId }: { videoId: string }) {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    maxSteps: 5,
-    body: {
-      videoId,
-    },
-  });
+  const { messages, input, handleInputChange, handleSubmit, append, status } =
+    useChat({
+      maxSteps: 5,
+      body: {
+        videoId,
+      },
+    });
+
+  const isScriptGenerationEnabled = useSchematicFlag(
+    FeatureFlag.SCRIPT_GENERATION
+  );
+  const isImageGenerationEnabled = useSchematicFlag(
+    FeatureFlag.IMAGE_GENERATION
+  );
+  const isTitleGenerationEnabled = useSchematicFlag(
+    FeatureFlag.TITLE_GENERATION
+  );
+  const isVideoAnalysisEnabled = useSchematicFlag(FeatureFlag.ANALYSE_VIDEO);
+
+  const generateScript = async () => {
+    const randomId = Math.random().toString(36).slice(2, 15);
+
+    const userMessage: Message = {
+      id: `generate-script-${randomId}`,
+      role: "user",
+      content:
+        "Generate a step-by-step shooting script for this video that I can use on my own channel to produce a video that is similar to this one, dont do any other steps such as generating a image, just generate the script only!  ",
+    };
+
+    append(userMessage);
+  };
+
+  const generateImage = async () => {
+    const randomId = Math.random().toString(36).slice(2, 15);
+
+    const userMessage: Message = {
+      id: `generate-image-${randomId}`,
+      role: "user",
+      content: "Generate a thumbnail for this video",
+    };
+
+    append(userMessage);
+  };
+
+  const generateTitle = async () => {
+    const randomId = Math.random().toString(36).slice(2, 15);
+
+    const userMessage: Message = {
+      id: `generate-title-${randomId}`,
+      role: "user",
+      content: "Generate a title for this video",
+    };
+
+    append(userMessage);
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -92,16 +144,10 @@ function AiAgentChat({ videoId }: { videoId: string }) {
                             />
                           ),
                           ul: ({ node, ...props }) => (
-                            <ul
-                              className="list-disc pl-5 my-2"
-                              {...props}
-                            />
+                            <ul className="list-disc pl-5 my-2" {...props} />
                           ),
                           ol: ({ node, ...props }) => (
-                            <ol
-                              className="list-decimal pl-5 my-2"
-                              {...props}
-                            />
+                            <ol className="list-decimal pl-5 my-2" {...props} />
                           ),
                           li: ({ node, ...props }) => (
                             <li className="my-1" {...props} />
@@ -120,27 +166,29 @@ function AiAgentChat({ videoId }: { videoId: string }) {
                         {m.content}
                       </ReactMarkdown>
                     </div>
-                    
+
                     {/* Display all tool invocation parts */}
-                    {m.parts.filter(part => part.type === "tool-invocation").map((part, i) => (
-                      <div
-                        key={i}
-                        className="bg-white/50 rounded-lg p-2 space-y-2 text-gray-800"
-                      >
-                        <div className="font-medium text-xs">
-                          {formatToolInvocation(part as ToolPart)}
+                    {m.parts
+                      .filter((part) => part.type === "tool-invocation")
+                      .map((part, i) => (
+                        <div
+                          key={i}
+                          className="bg-white/50 rounded-lg p-2 space-y-2 text-gray-800"
+                        >
+                          <div className="font-medium text-xs">
+                            {formatToolInvocation(part as ToolPart)}
+                          </div>
+                          {(part as ToolPart).toolInvocation.result && (
+                            <pre className="text-xs bg-white/75 p-2 rounded overflow-auto max-h-40">
+                              {JSON.stringify(
+                                (part as ToolPart).toolInvocation.result,
+                                null,
+                                2
+                              )}
+                            </pre>
+                          )}
                         </div>
-                        {(part as ToolPart).toolInvocation.result && (
-                          <pre className="text-xs bg-white/75 p-2 rounded overflow-auto max-h-40">
-                            {JSON.stringify(
-                              (part as ToolPart).toolInvocation.result,
-                              null,
-                              2
-                            )}
-                          </pre>
-                        )}
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 ) : (
                   // User message
@@ -203,18 +251,67 @@ function AiAgentChat({ videoId }: { videoId: string }) {
           <form onSubmit={handleSubmit} className="flex gap-2">
             <input
               type="text"
-              placeholder="Type your message..."
+              placeholder={
+                !isVideoAnalysisEnabled
+                  ? "Upgrade to ask anything about your video"
+                  : "Ask Anything about your video"
+              }
               className="flex-1 px-4 py-2 rounded-full text-sm border focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               value={input}
               onChange={handleInputChange}
             />
             <Button
               type="submit"
+              disabled={
+                status === "streaming" ||
+                status === "submitted" ||
+                !isVideoAnalysisEnabled
+              }
               className="px-4 py-2 bg-blue-500 text-white text-sm rounded-full hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send
+              {status === "streaming"
+                ? "AI is replying..."
+                : status === "submitted"
+                ? "AI is thinking..."
+                : "Send"}
             </Button>
           </form>
+
+          <div className="flex gap-2">
+            <button
+              className="text-xs xl:text-sm w-full flex items-center justify-center gap-2 py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={generateScript}
+              type="button"
+              disabled={!isScriptGenerationEnabled}
+            >
+              <LetterText className="w-4 h-4" />
+              {isScriptGenerationEnabled ? (
+                <span>Generate Script</span>
+              ) : (
+                <span>Upgrade to generate a script</span>
+              )}
+            </button>
+
+            <button
+              className="text-xs xl:text-sm w-full flex items-center justify-center gap-2 py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={generateTitle}
+              type="button"
+              disabled={!isTitleGenerationEnabled}
+            >
+              <PenIcon className="w-4 h-4" />
+              Generate Title
+            </button>
+
+            <button
+              className="text-xs xl:text-sm w-full flex items-center justify-center gap-2 py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={generateImage}
+              type="button"
+              disabled={!isImageGenerationEnabled}
+            >
+              <ImageIcon className="w-4 h-4" />
+              Generate Image
+            </button>
+          </div>
         </div>
       </div>
     </div>

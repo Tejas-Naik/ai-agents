@@ -24,3 +24,46 @@ export const getImages = query({
     return imageUrls;
   },
 });
+
+export const generateUploadUrl = mutation(async (ctx) => {
+  return await ctx.storage.generateUploadUrl();
+});
+
+export const storeImage = mutation({
+  args: {
+    storageId: v.id("_storage"),
+    userId: v.string(),
+    videoId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    // store the image URL in database
+    const imageId = await ctx.db.insert("images", {
+      storageId: args.storageId,
+      videoId: args.videoId,
+      userId: args.userId,
+    });
+    return imageId;
+  },
+});
+
+//  Get images for a specific user and video combination
+export const getImage = query({
+  args: {
+    userId: v.string(),
+    videoId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const image = await ctx.db
+      .query("images")
+      .withIndex("by_user_and_video", (q) =>
+        q.eq("userId", args.userId).eq("videoId", args.videoId)
+      )
+      .first();
+
+    if (!image) {
+      return null;
+    }
+
+    return await ctx.storage.getUrl(image.storageId);
+  },
+});

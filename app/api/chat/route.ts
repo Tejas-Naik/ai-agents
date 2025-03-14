@@ -4,6 +4,7 @@ import { streamText } from "ai";
 import { currentUser } from "@clerk/nextjs/server";
 import { getVideoDetails } from "@/actions/getVideoDetails";
 import fetchTranscript from "@/tools/fetchTranscript";
+import { generateImage } from "@/tools/generateImage";
 
 const anthropic = createAnthropic({
   apiKey: process.env.CLAUDE_API_KEY,
@@ -37,60 +38,9 @@ export async function POST(req: Request) {
     messages: [{ role: "system", content: systemMessage }, ...messages],
     tools: {
       fetchTranscript: fetchTranscript,
+      generateImage: generateImage(videoId, user.id),
     },
   });
 
   return result.toDataStreamResponse();
 }
-
-// import { getVideoDetails } from "@/actions/getVideoDetails";
-// import fetchTranscript from "@/tools/fetchTranscript";
-// import { createAnthropic } from "@ai-sdk/anthropic";
-// import { currentUser } from "@clerk/nextjs/server";
-// import { streamText } from "ai";
-// import { NextResponse } from "next/server";
-
-// const anthropic = createAnthropic({
-//   apiKey: process.env.CLAUDE_API_KEY,
-//   headers: {
-//     "anthropic-beta": "token-efficient-tools-2025-02-19",
-//   },
-// });
-
-// const model = anthropic("claude-3-7-sonnet-20250219");
-
-// export async function POST(req: Request) {
-//   const { messages, videoId } = await req.json();
-//   const user = await currentUser();
-
-//   if (!user) {
-//     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-//   }
-
-//   const videoDetails = await getVideoDetails(videoId);
-
-//   const systemMessage = `You are an AI assistant ready to answer questions about one specific video. The video ID is ${videoId}, but you'll refer to it as ${
-//     videoDetails?.title || "Selected Video"
-//   } to make the conversation more engaging. 🎬✨
-
-// Use emojis to keep interactions lively and friendly. Always format your responses using markdown:
-// - Use ## for section headings
-// - Use bullet points for lists
-// - Use **bold** for emphasis
-// - Use \`code\` for technical terms
-// - Use > for quotes or important points
-
-// If an error occurs, explain the issue clearly and suggest that the user try again later. If the error message suggests an upgrade is required, inform the user that they need to upgrade their plan to access the feature. Direct them to "Manage Plan" in the header to complete the upgrade. 🚀
-
-// If a tool is used and the response contains a cached transcript, explain that the transcript was previously generated and stored in the database to save the user tokens. Use simple, user-friendly language, avoiding technical jargon like "cache." Instead, clarify that the system saved their previous transcription for convenience. 🗂️💾
-
-// Ensure responses are formatted for Notion very important that it must be in Notion formatting, making them clear and easy to read. 📌`;
-
-//   const result = streamText({
-//     model,
-//     messages: [{ role: "system", content: systemMessage }, ...messages],
-//     tools: { fetchTranscript: fetchTranscript },
-//   });
-
-//   return result.toDataStreamResponse();
-// }
