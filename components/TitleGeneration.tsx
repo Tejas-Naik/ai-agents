@@ -5,10 +5,19 @@ import Usage from "./Usage";
 import { FeatureFlag } from "@/features/flags";
 import { useSchematicEntitlement } from "@schematichq/schematic-react";
 import { Copy } from "lucide-react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
 
 function TitleGeneration({ videoId }: { videoId: string }) {
   const { user } = useUser();
-  const titles: { title: string; _id: string }[] = [];
+  // const titles: { title: string; _id: string }[] = [];
+  const titlesQuery = useQuery(api.titles.list, {
+    videoId,
+    userId: user?.id ?? "",
+  });
+  // Handle undefined by providing a default empty array
+  const titles = titlesQuery || [];
 
   console.log(videoId, user);
   const { value: isTitleGenerationEnabled } = useSchematicEntitlement(
@@ -17,7 +26,7 @@ function TitleGeneration({ videoId }: { videoId: string }) {
 
   const copyToClipboard = (title: string) => {
     navigator.clipboard.writeText(title);
-    // toast.success("Copied to Clipboard")
+    toast.success("Copied to Clipboard");
   };
 
   return (
@@ -27,7 +36,7 @@ function TitleGeneration({ videoId }: { videoId: string }) {
       </div>
 
       <div className="space-y-3 mt-4 max-h-[280px] overflow-y-auto">
-        {titles?.map((title) => (
+        {titles.map((title) => (
           <div
             key={title._id}
             className="group relative p-4 border border-gray-100 rounded-lg border-gray-50 hover:border-blue-100 hover:bg-blue-50 transition-all duration-200"
@@ -46,7 +55,7 @@ function TitleGeneration({ videoId }: { videoId: string }) {
       </div>
 
       {/* No titles generated */}
-      {!titles?.length && !!isTitleGenerationEnabled && (
+      {titles.length === 0 && !!isTitleGenerationEnabled && (
         <div className="text-center py-8 px-4 rounded-lg mt-4 border-2 border-dashed border-gray-200">
           <p className="text-sm text-gray-400 mt-1">
             No titles have been generated yet.

@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import { createAnthropic } from "@ai-sdk/anthropic";
-import { streamText } from "ai";
+import { streamText, tool } from "ai";
 import { currentUser } from "@clerk/nextjs/server";
 import { getVideoDetails } from "@/actions/getVideoDetails";
 import fetchTranscript from "@/tools/fetchTranscript";
 import { generateImage } from "@/tools/generateImage";
+import { z } from "zod";
+import generateTitle from "@/tools/generateTitle";
 
 const anthropic = createAnthropic({
   apiKey: process.env.CLAUDE_API_KEY,
@@ -39,6 +41,17 @@ export async function POST(req: Request) {
     tools: {
       fetchTranscript: fetchTranscript,
       generateImage: generateImage(videoId, user.id),
+      getVideoDetails: tool({
+        description: "Get details of a Youtube video",
+        parameters: z.object({
+          videoId: z.string().describe("The video ID to get the details of"),
+        }),
+        execute: async ({ videoId }) => {
+          const videoDetails = await getVideoDetails(videoId);
+          return { videoDetails };
+        },
+      }),
+      generateTitle: generateTitle,
     },
   });
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Message, useChat } from "@ai-sdk/react";
 import { Button } from "./ui/button";
 import ReactMarkdown from "react-markdown";
@@ -8,7 +8,8 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { useSchematicFlag } from "@schematichq/schematic-react";
 import { FeatureFlag } from "@/features/flags";
-import { ImageIcon, LetterText, PenIcon } from "lucide-react";
+import { BotIcon, ImageIcon, LetterText, PenIcon } from "lucide-react";
+import { toast } from "sonner";
 
 const formatToolInvocation = (part: ToolPart) => {
   if (!part.toolInvocation) return "Unknown tool";
@@ -27,6 +28,10 @@ interface ToolPart {
 }
 
 function AiAgentChat({ videoId }: { videoId: string }) {
+  // Scrolling to bottom logic
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const messageContainerRef = useRef<HTMLDivElement>(null);
+
   const { messages, input, handleInputChange, handleSubmit, append, status } =
     useChat({
       maxSteps: 5,
@@ -45,6 +50,43 @@ function AiAgentChat({ videoId }: { videoId: string }) {
     FeatureFlag.TITLE_GENERATION
   );
   const isVideoAnalysisEnabled = useSchematicFlag(FeatureFlag.ANALYSE_VIDEO);
+
+  // This is to scroll to the bottom
+  useEffect(() => {
+    if (bottomRef.current && messageContainerRef.current) {
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  // This is for the toast message
+  useEffect(() => {
+    let toastId;
+
+    switch (status) {
+      case "submitted":
+        toastId = toast("Agent is Thinking....", {
+          id: toastId,
+          icon: <BotIcon className="w-4 h-4" />,
+        });
+        break;
+      case "streaming":
+        toastId = toast("Agent is Thinking....", {
+          id: toastId,
+          icon: <BotIcon className="w-4 h-4" />,
+        });
+        break;
+      case "error":
+        toastId = toast("Agent is Thinking....", {
+          id: toastId,
+          icon: <BotIcon className="w-4 h-4" />,
+        });
+        break;
+      case "ready":
+        toast.dismiss(toastId);
+        break;
+    }
+  }, [status]);
 
   const generateScript = async () => {
     const randomId = Math.random().toString(36).slice(2, 15);
@@ -90,7 +132,10 @@ function AiAgentChat({ videoId }: { videoId: string }) {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-4">
+      <div
+        className="flex-1 overflow-y-auto px-4 py-4"
+        ref={messageContainerRef}
+      >
         <div className="space-y-6">
           {messages.length === 0 && (
             <div className="flex items-center justify-center h-full min-h-[200px]">
@@ -242,6 +287,7 @@ function AiAgentChat({ videoId }: { videoId: string }) {
               </div>
             </div>
           ))}
+          <div ref={bottomRef} />
         </div>
       </div>
 

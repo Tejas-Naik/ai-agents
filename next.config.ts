@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
       },
     ],
+    // Add unoptimized option to skip optimization for specific domains
+    unoptimized: true,
+    // Increase the image response timeout
+    minimumCacheTTL: 600, // 10 minutes cache
   },
 };
 
