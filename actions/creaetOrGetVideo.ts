@@ -103,7 +103,7 @@ export const createOrGetVideo = async (
 
       return {
         success: true,
-        data: newVideo,
+        data: newVideo || undefined,
       };
     } else {
       console.log("Video exists - no token needs to be spent");
