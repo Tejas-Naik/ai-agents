@@ -89,10 +89,10 @@ export const createOrGetVideo = async (
             id: userId,
           },
           // Add a timestamp to ensure the event is unique
-          properties: {
-            timestamp: new Date().toISOString(),
-            videoId: videoId,
-          },
+          // properties: {
+          //   timestamp: new Date().toISOString(),
+          //   videoId: videoId,
+          // },
         });
 
         console.log("✅ Video analysis usage tracking completed successfully");
