@@ -1,7 +1,6 @@
 "use client";
 
 import { FeatureFlag } from "@/features/flags";
-import { Progress } from "@radix-ui/react-progress";
 import {
   useSchematicEntitlement,
   useSchematicIsPending,
