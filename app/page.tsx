@@ -15,7 +15,6 @@ import {
   Sparkles,
 } from "lucide-react";
 import YoutubeVideoForm from "@/components/YoutubeVideoForm";
-import { cn } from "@/lib/utils";
 
 interface Step {
   title: string;
@@ -324,9 +323,9 @@ export default function Home() {
                   </div>
                   <div className="bg-white shadow-lg rounded-xl p-5 max-w-md">
                     <p className="italic text-gray-600">
-                      "AgentTube has transformed how we analyze our content. The
+                      &quot;AgentTube has transformed how we analyze our content. The
                       AI insights have helped us increase engagement by 43% in
-                      just 3 months."
+                      just two months.&quot;
                     </p>
                     <div className="mt-4 flex items-center">
                       <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
@@ -409,7 +408,7 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-gray-600 mb-6 italic">
-                  "{testimonial.quote}"
+                  &quot;{testimonial.quote}&quot;
                 </p>
                 <div className="flex items-center">
                   <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-500 font-medium">
