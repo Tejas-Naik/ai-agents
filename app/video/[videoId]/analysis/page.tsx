@@ -7,7 +7,6 @@ import TitleGeneration from "@/components/TitleGeneration";
 import Transcription from "@/components/Transcription";
 import Usage from "@/components/Usage";
 import YoutubeVideoDetails from "@/components/YoutubeVideoDetails";
-import { Doc } from "@/convex/_generated/dataModel";
 import { FeatureFlag } from "@/features/flags";
 import { useUser } from "@clerk/nextjs";
 import { useParams } from "next/navigation";

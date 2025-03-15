@@ -22,11 +22,12 @@ const signInAppearance = {
 const userButtonAppearance = {
   elements: {
     avatarBox: "w-8 h-8",
-    userButtonPopoverCard: "bg-white/20 backdrop-blur-md border border-white/30 rounded-xl shadow-lg",
+    userButtonPopoverCard:
+      "bg-white/20 backdrop-blur-md border border-white/30 rounded-xl shadow-lg",
     userButtonPopoverActionButton: "text-white hover:bg-white/10",
     userButtonPopoverActionButtonText: "text-white",
     userButtonPopoverFooter: "border-white/10",
-  }
+  },
 };
 
 function Header() {
@@ -40,9 +41,7 @@ function Header() {
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                 <AgentPulse size="small" color="white" />
               </div>
-              <h1 className="text-lg font-medium text-white">
-                AgentTube
-              </h1>
+              <h1 className="text-lg font-medium text-white">AgentTube</h1>
             </Link>
           </div>
 

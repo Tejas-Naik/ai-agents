@@ -24,11 +24,12 @@ function YoutubeVideoDetails({ videoId }: { videoId: string }) {
     fetchVideoDetails();
   }, [videoId]);
 
-  if (error) return (
-    <div className="bg-red-50 text-red-500 p-4 rounded-lg">
-      Error: {error}
-    </div>
-  );
+  if (error)
+    return (
+      <div className="bg-red-50 text-red-500 p-4 rounded-lg">
+        Error: {error}
+      </div>
+    );
 
   if (!video)
     return (
@@ -94,7 +95,9 @@ function YoutubeVideoDetails({ videoId }: { videoId: string }) {
                 <Eye className="w-4 h-4 text-gray-600" />
                 <p className="text-sm text-gray-600">Views</p>
               </div>
-              <p className="font-medium text-gray-900">{Number(video.views).toLocaleString()}</p>
+              <p className="font-medium text-gray-900">
+                {Number(video.views).toLocaleString()}
+              </p>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-3 transition-all duration-300 hover:bg-gray-100">
