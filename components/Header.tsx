@@ -7,43 +7,64 @@ import { Button } from "./ui/button";
 const signInAppearance = {
   elements: {
     rootBox: "w-full",
-    card: "bg-white/20 backdrop-blur-md border border-white/30 rounded-xl shadow-lg",
-    headerTitle: "text-white",
-    headerSubtitle: "text-white/80",
-    formButtonPrimary: "bg-white/20 hover:bg-white/30 text-white",
-    formFieldInput: "bg-white/10 border border-white/30 text-white",
-    formFieldLabel: "text-white",
-    footerActionLink: "text-white hover:text-white/80",
-    identityPreviewText: "text-white",
-    identityPreviewEditButton: "text-white/80 hover:text-white",
+    card: "bg-white border border-gray-100 rounded-xl shadow-lg",
+    headerTitle: "text-gray-900",
+    headerSubtitle: "text-gray-600",
+    formButtonPrimary: "bg-blue-500 hover:bg-blue-600 text-white",
+    formFieldInput: "bg-white border border-gray-200 text-gray-900",
+    formFieldLabel: "text-gray-700",
+    footerActionLink: "text-blue-500 hover:text-blue-600",
+    identityPreviewText: "text-gray-900",
+    identityPreviewEditButton: "text-gray-600 hover:text-gray-900",
   },
 };
 
 const userButtonAppearance = {
   elements: {
     avatarBox: "w-8 h-8",
-    userButtonPopoverCard: "bg-white/20 backdrop-blur-md border border-white/30 rounded-xl shadow-lg",
-    userButtonPopoverActionButton: "text-white hover:bg-white/10",
-    userButtonPopoverActionButtonText: "text-white",
-    userButtonPopoverFooter: "border-white/10",
-  }
+    userButtonPopoverCard:
+      "bg-white border border-gray-100 rounded-xl shadow-lg",
+    userButtonPopoverActionButton: "text-gray-700 hover:bg-gray-50",
+    userButtonPopoverActionButtonText: "text-gray-700",
+    userButtonPopoverFooter: "border-gray-100",
+  },
 };
 
 function Header() {
   return (
-    <div className="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] z-50">
-      <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-full shadow-lg">
-        <div className="flex items-center justify-between h-14 px-6">
+    <div className="fixed  top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           {/* Left */}
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <AgentPulse size="small" color="white" />
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                <AgentPulse size="small" color="blue" />
               </div>
-              <h1 className="text-lg font-medium text-white">
-                AgentTube
+              <h1 className="text-lg font-medium text-gray-900">
+                <span>Agent</span>
+                <span className="text-blue-500">Tube</span>
               </h1>
             </Link>
+          </div>
+
+          {/* Middle */}
+          <div className="hidden md:flex space-x-8">
+            <a href="#features" className="text-gray-600 hover:text-gray-900">
+              Features
+            </a>
+            <a
+              href="#how-it-works"
+              className="text-gray-600 hover:text-gray-900"
+            >
+              How it Works
+            </a>
+            <a
+              href="#testimonials"
+              className="text-gray-600 hover:text-gray-900"
+            >
+              Testimonials
+            </a>
           </div>
 
           {/* Right */}
@@ -52,23 +73,26 @@ function Header() {
               <SignInButton mode="modal" appearance={signInAppearance}>
                 <Button
                   variant="ghost"
-                  className="text-white text-sm font-medium hover:bg-white/10 transition-colors rounded-full px-6"
+                  className="text-gray-600 text-sm font-medium hover:text-gray-900 transition-colors mr-2"
                 >
                   Sign In
                 </Button>
               </SignInButton>
+              <Button className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg text-sm px-4 py-2 transition-colors">
+                Get Started
+              </Button>
             </SignedOut>
 
             <SignedIn>
               <Link href="/manage-plan">
                 <Button
                   variant="ghost"
-                  className="text-white text-sm font-medium hover:bg-white/10 transition-colors"
+                  className="text-gray-600 text-sm font-medium hover:text-gray-900 transition-colors"
                 >
                   Manage Plan
                 </Button>
               </Link>
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center ml-4">
+              <div className="ml-4">
                 <UserButton appearance={userButtonAppearance} />
               </div>
             </SignedIn>

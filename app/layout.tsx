@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <ClientWrapper>
           <Header />
-          <main className="flex-1 pt-24">{children}</main>
+          <main className="">{children}</main>
           <Toaster position="bottom-center" />
         </ClientWrapper>
       </body>
